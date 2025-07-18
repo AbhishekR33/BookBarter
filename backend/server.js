@@ -13,12 +13,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:5173', 
-    'https://bookbarter.vercel.app',
-    'https://bookbarter-frontend.vercel.app'
-  ],
+  origin: true, // Allow all origins for now
   credentials: true
 }));
 app.use(express.json());
