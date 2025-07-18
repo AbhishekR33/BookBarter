@@ -33,11 +33,21 @@ const Login = () => {
       localStorage.setItem('userId', res.data.userId);
       localStorage.setItem('isAuthenticated', 'true');
       
+      // Store additional user info if available from response
+      if (res.data.user) {
+        localStorage.setItem('userName', res.data.user.name || 'Abhishek Ravindra');
+        localStorage.setItem('userEmail', res.data.user.email || email);
+      } else {
+        // Fallback to email from form and default name
+        localStorage.setItem('userName', 'Abhishek Ravindra');
+        localStorage.setItem('userEmail', email);
+      }
+      
       // Trigger storage event to update App state
       window.dispatchEvent(new Event('storage'));
       
-      // Navigate to My Books page after successful login
-      navigate('/my-books');
+      // Navigate to Home page after successful login
+      navigate('/');
     } catch (error) {
       console.error('❌ Login error details:', error);
       

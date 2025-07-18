@@ -8,7 +8,7 @@ import UploadBook from './pages/UploadBook';
 import BookList from './pages/BookList';
 import MyBooks from './pages/MyBooks';
 import Notifications from './pages/Notifications';
-import { isAuthenticated, logout, getUserId, getUserEmail, getUserName, setDefaultUserInfo } from './utils/auth';
+import { isAuthenticated, logout, getUserId } from './utils/auth';
 import axios from './api/axios';
 import './App.css';
 
@@ -16,7 +16,6 @@ import './App.css';
 const Navigation = ({ authenticated, unreadCount, onLogout }) => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   const navItems = authenticated ? [
     { path: '/', label: 'Home', icon: '🏠' },
@@ -46,7 +45,8 @@ const Navigation = ({ authenticated, unreadCount, onLogout }) => {
         <div className="navbar-content">
           {/* Logo */}
           <Link to="/" className="navbar-brand">
-            <img src="/bukify-logo.png" alt="Bukify Logo" className="brand-logo" />
+            <div className="brand-icon">📚</div>
+            <span className="brand-text">BookBarter</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -70,55 +70,15 @@ const Navigation = ({ authenticated, unreadCount, onLogout }) => {
           <div className="navbar-actions">
             {authenticated ? (
               <div className="user-menu">
-                <div className="profile-section">
-                  <button 
-                    className="profile-btn"
-                    onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  >
-                    <div className="profile-avatar">
-                      <span className="profile-initial">
-                        {getUserName()?.charAt(0)?.toUpperCase() || 'U'}
-                      </span>
-                    </div>
-                    <div className="profile-info">
-                      <span className="profile-name">{getUserName() || 'User'}</span>
-                      <span className="profile-email">{getUserEmail() || 'user@example.com'}</span>
-                    </div>
-                    <span className="profile-arrow">▼</span>
-                  </button>
-                  
-                  {profileMenuOpen && (
-                    <div className="profile-dropdown">
-                      <div className="profile-dropdown-header">
-                        <div className="profile-avatar-large">
-                          {getUserName()?.charAt(0)?.toUpperCase() || 'U'}
-                        </div>
-                        <div>
-                          <div className="profile-name-large">{getUserName() || 'User'}</div>
-                          <div className="profile-email-small">{getUserEmail() || 'user@example.com'}</div>
-                        </div>
-                      </div>
-                      <div className="profile-dropdown-divider"></div>
-                      <Link to="/profile" className="profile-dropdown-item">
-                        <span className="dropdown-icon">👤</span>
-                        View Profile
-                      </Link>
-                      <Link to="/settings" className="profile-dropdown-item">
-                        <span className="dropdown-icon">⚙️</span>
-                        Settings
-                      </Link>
-                      <Link to="/help" className="profile-dropdown-item">
-                        <span className="dropdown-icon">❓</span>
-                        Help
-                      </Link>
-                      <div className="profile-dropdown-divider"></div>
-                      <button onClick={onLogout} className="profile-dropdown-item logout-btn">
-                        <span className="dropdown-icon">🚪</span>
-                        Logout
-                      </button>
-                    </div>
-                  )}
+                <div className="avatar">
+                  {getUserId()?.charAt(0)?.toUpperCase() || 'U'}
                 </div>
+                <button 
+                  className="btn btn-secondary btn-sm"
+                  onClick={onLogout}
+                >
+                  Logout
+                </button>
               </div>
             ) : (
               <div className="auth-buttons">
@@ -186,10 +146,6 @@ function App() {
   // Check authentication status on app load
   useEffect(() => {
     setAuthenticated(isAuthenticated());
-    // Set default user info for existing sessions
-    if (isAuthenticated()) {
-      setDefaultUserInfo();
-    }
     setLoading(false);
   }, []);
 
@@ -237,7 +193,7 @@ function App() {
         <div className="loading-spinner">
           <div className="loading"></div>
         </div>
-        <p className="loading-text">Loading Bukify...</p>
+        <p className="loading-text">Loading BookBarter...</p>
       </div>
     );
   }
@@ -268,7 +224,8 @@ function App() {
           <div className="container">
             <div className="footer-content">
               <div className="footer-brand">
-                <img src="/bukify-logo.png" alt="Bukify Logo" className="footer-brand-logo" />
+                <div className="brand-icon">📚</div>
+                <span className="brand-text">BookBarter</span>
               </div>
               <p className="footer-text">
                 Share knowledge, exchange books, build community.
@@ -279,11 +236,6 @@ function App() {
                 <a href="#" className="footer-link">Terms</a>
                 <a href="#" className="footer-link">Contact</a>
               </div>
-            </div>
-            <div className="footer-bottom">
-              <p className="copyright">
-                © 2025 Abhishek Ravindra. All rights reserved. Built with ❤️ for book lovers.
-              </p>
             </div>
           </div>
         </footer>

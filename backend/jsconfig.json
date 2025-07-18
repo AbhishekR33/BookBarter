@@ -4,12 +4,25 @@
     "module": "commonjs",
     "forceConsistentCasingInFileNames": false,
     "allowJs": true,
-    "checkJs": false
+    "checkJs": false,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "types": []
   },
   "include": [
-    "**/*.js"
+    "*.js",
+    "models/**/*.js",
+    "routes/**/*.js",
+    "config/**/*.js",
+    "controllers/**/*.js"
   ],
   "exclude": [
-    "node_modules"
-  ]
+    "node_modules",
+    "**/*.test.js",
+    "**/*.spec.js",
+    "**/@types/**"
+  ],
+  "typeAcquisition": {
+    "enable": false
+  }
 }

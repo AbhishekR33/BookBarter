@@ -112,7 +112,7 @@ const Home = () => {
       <section className="features-section">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">How Bukify Works</h2>
+            <h2 className="section-title">How BookBarter Works</h2>
             <p className="section-subtitle">
               Simple steps to start your book sharing journey
             </p>
